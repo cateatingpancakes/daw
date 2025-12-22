@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link href="css/all.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+        xintegrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous" defer></script>
+
+        <title>Proiect DAW - Detalii proiect</title>
+
+        <style>
+            li {
+                margin-top: 4px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.php">Proiect</a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar" aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="container content">
+
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-8 col-md-10">
+                    
+                    <h4><strong>Proiect la DAW</strong></h5>
+                    <h5><i>Spiridon Mihnea-Andrei</i></h6>
+                    
+                    <h5 class="mt-5">Rezumat</h5>
+
+                    <p class="mt-3">Proiectul abordează tema 11 din lista temelor propuse, anume <strong>Teatru/operă/cinematograf</strong>. În particular, propun implementarea unei aplicații de tip Cinema City, care permite clienților unui cinematograf să cumpere bilete și să acceseze o bază de date cu filme, iar personalului administrator să gestioneze sălile, filmele, proiecțiile etc.</p>
+
+                    <h5 class="mt-4">Arhitectură</h5>
+
+                    <p class="mt-3">Componentele principale ale aplicației sunt utilizatorul și proiecția. Despre utilizatorii aplicației spunem următoarele:</p>
+                    
+                    <ul>
+                        <li>Sunt de patru tipuri, anume vizitatori, nevalidați, obișnuiți și administratori.</li>
+                        <li>Un vizitator parcurge procesul de înregistrare pentru a-și creea un cont, devenind utilizator nevalidat.</li> 
+                        <li>Un utilizator nevalidat parcurge procesul de validare, ce implică verificarea adresei de email înscrisă în timpul procesului de înregistrare, pentru a deveni utilizator obișnuit.</li>
+                        <li>Orice utilizator poate parcurge procesul de achiziționare bilet în care acesta selectează o dată, o proiecție din acea dată, un loc și în cele din urmă un tip de bilet, în această ordine.</li>
+                        <li>Toți utilizatorii cu cont, adică nu vizitatorii, pot parcurge procesul de autentificare pentru a intra în cont.</li>
+                        <li>În urma procesului de autentificare, utilizatorul cu cont începe o sesiune de 24 de ore, timp în care aplicația nu va solicita încă o dată procesului de autentificare, dacă cookie-ul aferent sesiunii nu este șters manual.</li>
+                        <li>Utilizatorii cu cont pot modifica datele personale trecute în acesta, precum numele real, numele de utilizator sau adresa de email, dar numai utilizatorii obișnuiți și administratorii pot vedea în contul lor lista cu biletele achiziționate și pot cere o anulare a biletului. Cu alte cuvinte, utilizatorii nevalidați nu au acest drept.</li>
+                        <li>Un administrator poate face o cerere prin care se aduc în baza de date informații despre filme din <a href="https://www.imdb.com/">IMDb</a> și poate solicita diverse rapoarte de activitate care se generează într-un format potrivit, de exemplu ca fișier PDF.</li>
+                        <li>Vizitatorul este reprezentat prin NULL în baza de date, iar restul utilizatorilor au asociat un ID unic.</li>
+                        <li>Un utilizator nu poate deveni, prin interacțiunea cu aplicația, administrator.</li>
+                    </ul>
+
+                    <p class="mt-3">Despre proiecții spunem următoarele:</p>
+
+                    <ul>
+                        <li>Sunt entitatea care reprezintă o ecranizare particulară a unui film în cadrul cinematografului nostru, la o anumită oră și într-una dintre sălile cinematografului.</li>
+                        <li>Proiecția trebuie să fie, conform descrierii de mai sus, în relație de tip many-to-one cu entitatea care reprezintă filmul și cu entitatea care reprezintă sala.</li>
+                        <li>Pentru proiecții se emit bilete pe anumite locuri, conform și până în capacitatea sălii asociate acesteia. Așadar avem o relație one-to-many între proiecție și entitatea care reprezintă vânzarea unui bilet.</li>
+                        <li>Pentru fiecare vânzare de bilet avem asociat un tip de bilet și un utilizator. Așadar avem o relație many-to-one cu entitatea care reprezintă utilizatorul și o relație many-to-one cu entitatea care reprezintă tipul de bilet.</li>
+                        <li>Biletele se trimit în momentul achiziției, o singură dată, pe email. Pentru utilizatorii validați, ele pot fi văzute în continuare și gestionate din cont.</li>
+                    </ul>
+
+                    <p class="mt-3">În baza de date a aplicației vom avea, printre altele, tabele care reprezintă aceste entități. Diagrama conceptuală a bazei de date, reprezentată de utilitarul phpMyAdmin, este:</p>
+                    
+                    <img src="media/erd.png" class="w-100">
+
+                    <p class="mt-2">Tabelele sunt după cum urmează:</p>
+                    
+                    <ul>
+                        <li>MOVIE, reprezentând filmul și memorând date despre acesta.</li>
+                        <li>ROOM, reprezentând sala de cinematograf și memorând date despre aceasta, în mod notabil structura acesteia ca număr de linii și număr de coloane.</li>
+                        <li>PROJECTION, reprezentând proiecția, conform descrierii de mai sus.</li>
+                        <li>USER, reprezentând utilizatorul. De menționat este că parola nu se memorează în clar. Atributele al căror nume nu sugerează automat conținutul lor sunt:
+                            <ul>
+                                <li>PERM_CODE, un întreg reprezentând permisiunile utilizatorului, reprezentate ca biți diferiți ai unui întreg, unde obținerea de coduri se face prin OR binar, iar testarea permisiunilor se face prin AND binar. Sunt necesari pentru funcționarea aplicației doar 2 biți. Implementarea rezervă în total 7 biți prin INT(3).</li>
+                                <li>CONF_CODE, un șir de caractere în care este stocat codul de confirmare cu care trebuie un utilizator nevalidat să acceseze pagina de validare, ca parte a procesului de validare, pentru a deveni utilizator obișnuit. Este NULL pentru toți ceilalți utilizatori.</li>
+                            </ul>
+                        </li>
+                        <li>SESSION, unde este stocat un COOKIE securizat criptografic aferent unei sesiuni deschise de un utilizator, cu un anumit moment de expirare.</li>
+                        <li>STAT, reprezentând o accesare a aplicației web, pe o anumită pagină, la un anumit moment, printr-un anumit IP, și eventual de către un anumit USER. Acest tabel este folosit în scop statistic.</li>
+                        <li>TICKET_TYPE, unde sunt memorate tipurile de bilete disponibile, de exemplu biletul de adult, student sau pensionar, fiecare putând avea un preț diferit în funcție de tipul lor.</li>
+                        <li>SALE, reprezentând vânzarea unui anumit tip de bilet pentru un anumit loc în cinematograf pentru o proiecție dată.
+                            <ul>
+                                <li>CHECK_CODE reprezintă un cod de validare a biletului care va fi înscris pe codul QR pentru verificare la scanarea fizică, în cinematograf.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <p class="mt-2">Tabelele sunt în FN3, dacă admitem că între PERM_CODE și CONF_CODE din USER nu avem dependență. Deși momentan avem CONF_CODE doar pentru utilizatori nevalidați, cu PERM_CODE = 0, menținem câmpul în tabel pentru extindere. De exemplu, dacă am introduce categoria de moderator, o persoană de încredere cu dreptul de a adăuga filme în baza de date, dar nu de a șterge proiecții, putem refolosi CONF_CODE pentru reconfirmare sau acceptare a invitației în procesul de promovare la moderator.</p>
+
+                    <p class="mt-2">În teorie relația dintre USER și SESSION este one-to-many, iar implementarea nu prespune în niciun moment existența unei relații one-to-one. Pot exista simultan în baza de date mai multe cookie-uri, chiar și expirate, pentru un același utilizator. Însă, în practică vom regăsi în baza de date cel mult un cookie pentru fiecare utilizator. Acest lucru nu vine ca urmare a unui trigger sau constrângere la nivelul bazei de date, ci este o consecință a implementării, care face o cerere de revocare a tuturor cookie-urilor deja existente înainte de emiterea unui cookie nou. Un efect secundar dorit este imposibilitatea de a folosi același cont simultan de pe două dispozitive.</p>
+
+                    <h5 class="mt-4">Implementare</h5>
+
+                    <p class="mt-2">Putem descrie modul în care interacționează un utilizator cu aplicația prin intermediul diagramelor UML.</p>
+
+                    
+
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Vezi diagrame
+                        </a>
+
+                        <div class="dropdown-menu p-4">
+                            <p class="mt-3 ms-4">UML flux achiziționare bilet:</p>
+                            <img src="media/b1.png" class="w-20">
+
+                            <p class="mt-3 ms-4">UML flux gestiune proiecții:</p>
+                            <img src="media/b2.png" class="w-50">
+
+                            <p class="mt-3 ms-4">UML flux autentificare:</p>
+                            <img src="media/b3.png" class="w-50">
+
+                            <p class="mt-3 ms-4">UML flux înregistrare:</p>
+                            <img src="media/b4.png" class="w-20">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
