@@ -5,6 +5,9 @@
     require_once(__DIR__ . "/../mail/class.phpmailer.php");
     require_once(__DIR__ . "/../mail/config.php");
     require_once(__DIR__ . "/../view/utility.php");
+    require_once(__DIR__ . "/../require/stat.php");
+
+    Stat::log($_SERVER["SCRIPT_NAME"]);
 
     $userData = Auth::getData();
 

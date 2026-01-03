@@ -1,5 +1,8 @@
 <?php
     require_once(__DIR__ . "/view/utility.php");
+    require_once(__DIR__ . "/require/stat.php");
+
+    Stat::log($_SERVER['SCRIPT_NAME']);
 
     $movieName    = $_POST["MOVIE_NAME"];
     $movieRuntime = $_POST["MOVIE_RUNTIME"];

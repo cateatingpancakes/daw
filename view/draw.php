@@ -51,6 +51,43 @@
                     </div>";
         }
 
+        public static function movieCard2($name, $year, $runtime, $rating, $drawInsert, $drawButton)
+        {
+            echo "<div class=\"col-md-4\">
+                    <div class=\"card h-100\">
+                        <div class=\"card-body\">
+                            <h5 class=\"card-title\">{$name} ({$year})</h5>
+                            <p class=\"card-text\">IMDb: {$rating} <i style=\"color:gray\">({$runtime} min)</i></p>";
+
+            if($drawInsert && $drawButton) 
+            {
+                    echo    "<form method=\"POST\" action=\"action/action_movieinsert.php\" target=\"action-frame\">
+                                <input type=\"hidden\" name=\"INS_NAME\" value=\"{$name}\">
+                                <input type=\"hidden\" name=\"INS_RUNTIME\" value=\"{$runtime}\">";
+
+                                CSRF::input();
+
+                    echo       "<button type=\"submit\" class=\"btn btn-success\">Adaugă</button>
+                             </form>";
+            } 
+            else if($drawButton)
+            {
+                    echo    "<button type=\"button\" class=\"btn btn-secondary\" disabled>Adaugă</button>";
+
+                    echo    "<form method=\"POST\" class=\"d-inline\" action=\"action/action_moviedelete.php\" target=\"action-frame\">
+                                <input type=\"hidden\" name=\"DEL_NAME\" value=\"{$name}\">";
+            
+                                CSRF::input();
+
+                    echo        "<button type=\"submit\" class=\"btn btn-danger\">Șterge</button>
+                            </form>";
+            }
+
+            echo "      </div>
+                    </div>
+                </div>";
+        }
+
         public static function movieInsertCard()
         {
             $timeNow = date("H:i");
@@ -254,6 +291,16 @@
             else
             {
                 echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"" . htmlspecialchars($loginUrl) . "\">Login</a></li>";
+            }
+        }
+
+        public static function statsLink($statsUrl = "stats.php")
+        {
+            $userData = Auth::getData();
+
+            if(isset($userData) && Auth::hasPerm(Auth::PERM_ADMIN))
+            {
+                echo "<li class=\"nav-item\"><a class=\"nav-link\" href=\"" . htmlspecialchars($statsUrl) . "\">Rapoarte</a></li>";
             }
         }
 

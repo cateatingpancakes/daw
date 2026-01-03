@@ -8,6 +8,9 @@
         require_once(__DIR__ . "/view/utility.php");
         require_once(__DIR__ . "/mail/config.php");
         require_once(__DIR__ . "/mail/class.phpmailer.php");
+        require_once(__DIR__ . "/require/stat.php");
+
+        Stat::log($_SERVER["SCRIPT_NAME"]);
     ?>
 
     <head>
@@ -33,7 +36,9 @@
                 <div class="collapse navbar-collapse" id="topNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="index.php">Acasă</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Filme</a></li>
+                        <li class="nav-item"><a class="nav-link" href="movies.php">Filme</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+                        <?php Draw::statsLink(); ?>
                         <?php Draw::loginLink(); ?>
                     </ul>
                 </div>

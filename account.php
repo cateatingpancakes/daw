@@ -5,6 +5,7 @@
         require_once(__DIR__ . "/require/query.php");
         require_once(__DIR__ . "/require/auth.php");
         require_once(__DIR__ . "/view/draw.php"); 
+        require_once(__DIR__ . "/require/stat.php");
 
         $userData = Auth::getData();
 
@@ -12,6 +13,8 @@
         {
             die();
         }
+
+        Stat::log($_SERVER["SCRIPT_NAME"]);
     ?>
 
     <head>
@@ -40,7 +43,9 @@
                 <div class="collapse navbar-collapse" id="topNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="index.php">Acasă</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Filme</a></li>
+                        <li class="nav-item"><a class="nav-link" href="movies.php">Filme</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+                        <?php Draw::statsLink(); ?>
                         <?php Draw::loginLink(); ?>
                     </ul>
                 </div>
@@ -56,7 +61,7 @@
                     ?>
 
                     <h3 class="mb-4">Bună, <?php echo htmlspecialchars($userData["realname"]); ?></h3>
-                    
+                
                     <form action="action/action_userchange.php" target="action-frame" method="POST">
                         <?php
                             CSRF::input();
@@ -95,6 +100,11 @@
 
                         <button type="submit" class="btn btn-primary">Salvează</button>
                     </form>
+
+                    <form class="mt-2" target="action-frame" method="POST" action="action/action_sessionend.php">
+                        <?php CSRF::input(); ?>
+                        <button type="submit" class="btn btn-danger">Termină sesiunea</button>
+                    </form>
                 </div>
 
                 <div class="col-md-6 text-start ps-4">
@@ -119,6 +129,8 @@
             window.addEventListener("message", function(message) {
                 if(message.data == "refresh") {
                     window.location.reload(true);
+                } else if(message.data == "home") {
+                    window.location = "index.php";
                 }
             });
         </script>

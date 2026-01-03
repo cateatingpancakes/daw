@@ -18,11 +18,12 @@
 
         private function __construct() 
         {
-            // On server
-            $host = ""; // Removed
-            $dbname = ""; // Removed
-            $username = ""; // Removed
-            $password = ""; // Removed
+
+            // Eliminat
+            $host = "";
+            $dbname = "";
+            $username = "";
+            $password = "";
 
             try 
             {

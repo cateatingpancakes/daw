@@ -6,8 +6,11 @@
         require_once(__DIR__ . "/../require/auth.php");
         require_once(__DIR__ . "/../view/draw.php"); 
         require_once(__DIR__ . "/../view/utility.php");
+        require_once(__DIR__ . "/../require/stat.php");
 
         Auth::gateBy(Auth::PERM_ADMIN);
+
+        Stat::log($_SERVER["SCRIPT_NAME"]);
 
         if(!isset($_POST["PROJ_CHOICE"]) || $_POST["PROJ_CHOICE"] == "")
         {
@@ -46,7 +49,9 @@
                 <div class="collapse navbar-collapse" id="topNavbar">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.php">Acasă</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Filme</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../movies.php">Filme</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.php">Contact</a></li>
+                        <?php Draw::statsLink("../stats.php"); ?>
                         <?php Draw::loginLink("../account.php", "../login.php"); ?>
                     </ul>
                 </div>

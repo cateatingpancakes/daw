@@ -203,6 +203,28 @@
             }
         }
 
+        public static function createMovie($name, $runtime)
+        {
+            if(isset(self::$_conn)) 
+            {
+                try
+                {
+                    $sql = "INSERT INTO
+                            movie(NAME, RUNTIME)
+                            VALUES (:name, :runtime)";
+                    $stmt = self::$_conn->prepare($sql);
+                    $stmt->execute([
+                        "name"    => $name,
+                        "runtime" => $runtime
+                    ]);
+                }
+                catch(Exception $e)
+                {
+                    self::failRoutine($e);
+                }
+            }
+        }
+
         public static function getProjections($date)
         {
             if(isset(self::$_conn)) 
@@ -378,6 +400,101 @@
                     ]);
 
                     return $stmt->fetch(PDO::FETCH_ASSOC);
+                }
+                catch(Exception $e)
+                {
+                    self::failRoutine($e);
+                }
+            }
+        }
+
+        public static function recordStat($userId, $ip, $page)
+        {
+            if(isset(self::$_conn))
+            {
+                try
+                {
+                    $sql = "INSERT INTO 
+                            stat(USER_ID, IP, PAGE) 
+                            VALUES(:user_id, :ip, :page)";
+                    $stmt = self::$_conn->prepare($sql);
+                    $stmt->execute([
+                        "user_id" => $userId,
+                        "ip"      => $ip,
+                        "page"    => $page
+                    ]);
+                }
+                catch(Exception $e)
+                {
+                    self::failRoutine($e);
+                }
+            }
+        }
+
+        public static function countStat()
+        {
+            if(isset(self::$_conn))
+            {
+                try
+                {
+                    $sql = "SELECT
+                                PAGE AS TARGET, 
+                                COUNT(*) AS NO_ACCESS
+                            FROM stat
+                            GROUP BY PAGE";
+                    $stmt = self::$_conn->prepare($sql);
+                    $stmt->execute([]);
+
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                }
+                catch(Exception $e)
+                {
+                    self::failRoutine($e);
+                }
+            }
+        }
+
+        public static function exportStat()
+        {
+            if(isset(self::$_conn))
+            {
+                try
+                {
+                    $sql = "SELECT
+                                U.USERNAME AS USERNAME,
+                                S.IP AS IP,
+                                S.TIME AS TIME,
+                                S.PAGE AS PAGE
+                            FROM stat S
+                                LEFT JOIN user U on U.USER_ID = S.USER_ID
+                            ORDER BY S.TIME";
+                    $stmt = self::$_conn->prepare($sql);
+                    $stmt->execute([]);
+
+                    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                }
+                catch(Exception $e)
+                {
+                    self::failRoutine($e);
+                }
+            }
+        }
+
+        public static function addContact($name, $email, $clob)
+        {
+            if(isset(self::$_conn))
+            {
+                try
+                {
+                    $sql = "INSERT INTO 
+                            contact(EMAIL, NAME, CONTENT) 
+                            VALUES(:email, :name, :content)";
+                    $stmt = self::$_conn->prepare($sql);
+                    $stmt->execute([
+                        "email"   => $email,
+                        "name"    => $name,
+                        "content" => $clob
+                    ]);
                 }
                 catch(Exception $e)
                 {

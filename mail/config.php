@@ -8,10 +8,11 @@
             // No constructor, static-method class.
         }
 
-        const MAIL_UNAME  = ""; // Removed
-        const MAIL_PWORD  = ""; // Removed
-        const MAIL_SENDER = ""; // Removed
-        const MAIL_WHOAMI = ""; // Removed
-        const MAIL_HOST   = ""; // Removed
+        // Eliminat
+        const MAIL_UNAME  = "";
+        const MAIL_PWORD  = "";
+        const MAIL_SENDER = "";
+        const MAIL_WHOAMI = "";
+        const MAIL_HOST   = "";
     }
 ?>

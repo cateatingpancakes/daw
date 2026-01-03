@@ -125,4 +125,17 @@
 
         return $response;
     }
+
+    function imdbtime($str)
+    {
+        $h = explode("h", $str);
+        $h = $h[0];
+
+        $m = explode(" ", $str);
+        $m = $m[1];
+        $m = explode("m", $m);
+        $m = $m[0];
+
+        return $h * 60 + $m;
+    }
 ?>

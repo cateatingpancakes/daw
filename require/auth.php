@@ -14,8 +14,9 @@
         const PERM_USERS = 0b0000001;
         const PERM_ADMIN = 0b0000010;
 
-        const CAPTCHA_PUBLIC = ""; // Removed
-        const CAPTCHA_SECRET = ""; // Removed
+        // eliminat
+        const CAPTCHA_PUBLIC = "";
+        const CAPTCHA_SECRET = "";
 
         const STAT_NONE = 0;
         const STAT_FAIL = 1;
@@ -85,7 +86,7 @@
 
                     Query::revokeSession($record["USER_ID"]);
                     $cookie = Query::createSession($record["USER_ID"]);
-                    setcookie("AUTH_SESSION", $cookie, time() + 86400);
+                    setcookie("AUTH_SESSION", $cookie, time() + 86400, "/");
                 }
             }
         }

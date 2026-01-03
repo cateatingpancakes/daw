@@ -2,6 +2,9 @@
     require_once(__DIR__ . "/../require/connect.php");
     require_once(__DIR__ . "/../require/query.php");
     require_once(__DIR__ . "/../require/auth.php");
+    require_once(__DIR__ . "/../require/stat.php");
+
+    Stat::log($_SERVER["SCRIPT_NAME"]);
 
     $userData = Auth::getData();
 
